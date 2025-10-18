@@ -279,12 +279,6 @@ const Index = () => {
             }`} />
             
             <div className="h-full flex flex-col items-center justify-center p-4 relative z-10">
-              {map.status !== 'banned' && (
-                <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                  {map.status === 'picked' && gameMode === 'bo3' ? map.pickOrder : map.name}
-                </div>
-              )}
-              
               {map.status === 'banned' && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative">
@@ -294,9 +288,23 @@ const Index = () => {
                 </div>
               )}
               
-              {map.status === 'picked' && !isLastMap && gameMode === 'bo3' && (
-                <div className="text-sm font-bold mt-2 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                  {map.pickedBy === 'A' ? teamAName : teamBName}
+              {map.status === 'picked' && gameMode === 'bo3' && (
+                <div className="flex flex-col items-center gap-2">
+                  <div className="text-sm font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    {map.pickOrder === 3 ? 'Аутсайдер' : (map.pickedBy === 'A' ? teamAName : teamBName)}
+                  </div>
+                  <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    {map.name}
+                  </div>
+                  <div className="text-sm font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    Карта {map.pickOrder}
+                  </div>
+                </div>
+              )}
+              
+              {map.status !== 'banned' && (gameMode === 'bo1' || map.status !== 'picked') && (
+                <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  {map.name}
                 </div>
               )}
             </div>
