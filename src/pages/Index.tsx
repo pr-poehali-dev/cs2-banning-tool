@@ -20,13 +20,13 @@ interface MapState {
 }
 
 const mapImages: Record<Map, string> = {
-  nuke: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_nuke.jpg',
-  inferno: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_inferno.jpg',
-  ancient: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_ancient.jpg',
-  overpass: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_overpass.jpg',
-  train: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_train.jpg',
-  dust: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_dust2.jpg',
-  mirage: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_mirage.jpg',
+  nuke: 'https://liquipedia.net/commons/images/9/9b/Nuke_csgo.jpg',
+  inferno: 'https://liquipedia.net/commons/images/8/84/Infernonew_csgo.jpg',
+  ancient: 'https://liquipedia.net/commons/images/e/e8/Ancient_11-05-2021_csgo.jpg',
+  overpass: 'https://liquipedia.net/commons/images/b/b9/Overpass_csgo.jpg',
+  train: 'https://liquipedia.net/commons/images/0/04/Train_csgo.jpg',
+  dust: 'https://liquipedia.net/commons/images/7/7d/Dust_II_csgo.jpg',
+  mirage: 'https://liquipedia.net/commons/images/3/3c/Mirage_csgo.jpg',
 };
 
 const Index = () => {
