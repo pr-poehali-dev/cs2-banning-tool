@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -109,11 +109,6 @@ const Index = () => {
         setMaps(prev => prev.map(m => 
           m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A' } : m
         ));
-      } else if (gameMode === 'bo3') {
-        const pickOrder = maps.filter(m => m.status === 'picked').length + 1;
-        setMaps(prev => prev.map(m => 
-          m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder } : m
-        ));
       }
     }
   };
@@ -128,6 +123,26 @@ const Index = () => {
 
   const pickedMaps = maps.filter(m => m.status === 'picked');
   const isFinished = stepIndex >= steps.length;
+
+  useEffect(() => {
+    if (isFinished && gameMode === 'bo3') {
+      const availableMaps = maps.filter(m => m.status === 'available');
+      const pickedCount = maps.filter(m => m.status === 'picked').length;
+      
+      if (availableMaps.length === 1 && pickedCount === 2) {
+        const pickOrder = 3;
+        setMaps(prev => {
+          const hasUnpicked = prev.some(m => m.status === 'available');
+          if (hasUnpicked) {
+            return prev.map(m => 
+              m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder } : m
+            );
+          }
+          return prev;
+        });
+      }
+    }
+  }, [isFinished, gameMode]);
 
   if (phase === 'setup') {
     return (
