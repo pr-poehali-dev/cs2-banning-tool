@@ -20,13 +20,13 @@ interface MapState {
 }
 
 const mapImages: Record<Map, string> = {
-  nuke: 'https://liquipedia.net/commons/images/9/9b/Nuke_csgo.jpg',
-  inferno: 'https://liquipedia.net/commons/images/8/84/Infernonew_csgo.jpg',
-  ancient: 'https://liquipedia.net/commons/images/e/e8/Ancient_11-05-2021_csgo.jpg',
-  overpass: 'https://liquipedia.net/commons/images/b/b9/Overpass_csgo.jpg',
-  train: 'https://liquipedia.net/commons/images/0/04/Train_csgo.jpg',
-  dust: 'https://liquipedia.net/commons/images/7/7d/Dust_II_csgo.jpg',
-  mirage: 'https://liquipedia.net/commons/images/3/3c/Mirage_csgo.jpg',
+  nuke: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/0a0d48ff-4281-495e-ba49-801f0deb791c.jpg',
+  inferno: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/d06fd099-3cfb-4115-bfcc-80a0463f7b2e.jpg',
+  ancient: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/01be0018-c4b7-4f31-a450-9ce333b09a78.jpg',
+  overpass: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/6d89b204-a494-43b5-b5ba-97f49d6ea70e.jpg',
+  train: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/80dc5c89-a8ad-489d-b666-5ebe9df3e2c6.jpg',
+  dust: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/9c8de4fb-f947-4000-af36-e14459216a31.jpg',
+  mirage: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/17b724b2-8692-4418-a712-9ff5a640bf1f.jpg',
 };
 
 const Index = () => {
