@@ -224,6 +224,17 @@ const Index = () => {
     );
   }
 
+  if (isFinished && gameMode === 'bo1') {
+    const finalMap = maps.find(m => m.status === 'picked')?.name || maps.find(m => m.status === 'available')?.name;
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-background">
+        <div className="text-9xl font-bold uppercase text-[#00ff00] animate-fade-in">
+          {finalMap}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen w-screen flex flex-col bg-background overflow-hidden">
       <div className="flex items-center justify-between px-8 py-4 border-b border-border">
