@@ -16,6 +16,7 @@ interface MapState {
   status: 'available' | 'banned' | 'picked';
   pickedBy?: 'A' | 'B';
   side?: { team: 'A' | 'B'; side: Side };
+  pickOrder?: number;
 }
 
 const mapImages: Record<Map, string> = {
@@ -62,8 +63,8 @@ const Index = () => {
     { team: 'B', action: 'ban', count: 1 },
     { team: 'A', action: 'pick', count: 1 },
     { team: 'B', action: 'pick', count: 1 },
-    { team: 'B', action: 'ban', count: 1 },
     { team: 'A', action: 'ban', count: 1 },
+    { team: 'B', action: 'ban', count: 1 },
   ];
 
   const steps = gameMode === 'bo1' ? bo1Steps : bo3Steps;
@@ -88,8 +89,9 @@ const Index = () => {
       ));
       moveToNextStep();
     } else if (currentStep.action === 'pick') {
+      const pickOrder = maps.filter(m => m.status === 'picked').length + 1;
       setMaps(prev => prev.map(m => 
-        m.name === mapName ? { ...m, status: 'picked', pickedBy: currentTeam } : m
+        m.name === mapName ? { ...m, status: 'picked', pickedBy: currentTeam, pickOrder } : m
       ));
       moveToNextStep();
     }
@@ -106,6 +108,11 @@ const Index = () => {
       if (gameMode === 'bo1') {
         setMaps(prev => prev.map(m => 
           m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A' } : m
+        ));
+      } else if (gameMode === 'bo3') {
+        const pickOrder = maps.filter(m => m.status === 'picked').length + 1;
+        setMaps(prev => prev.map(m => 
+          m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder } : m
         ));
       }
     }
@@ -238,7 +245,7 @@ const Index = () => {
             <div className="h-full flex flex-col items-center justify-center p-4 relative z-10">
               {map.status !== 'banned' && !isLastMap && (
                 <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                  {map.name}
+                  {map.status === 'picked' && gameMode === 'bo3' ? map.pickOrder : map.name}
                 </div>
               )}
               
