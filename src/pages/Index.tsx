@@ -236,7 +236,7 @@ const Index = () => {
             }`} />
             
             <div className="h-full flex flex-col items-center justify-center p-4 relative z-10">
-              {map.status !== 'banned' && (
+              {map.status !== 'banned' && !isLastMap && (
                 <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {map.name}
                 </div>
@@ -251,7 +251,7 @@ const Index = () => {
                 </div>
               )}
               
-              {map.status === 'picked' && (
+              {map.status === 'picked' && !isLastMap && (
                 <div className="text-sm font-bold mt-2 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {map.pickedBy === 'A' ? teamAName : teamBName}
                 </div>
@@ -259,7 +259,10 @@ const Index = () => {
               
               {isLastMap && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-green-400 font-bold text-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">ВЫБРАНА</div>
+                  <div className="relative">
+                    <div className="text-[#008000] font-bold text-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">CHOSEN</div>
+                    <div className="absolute top-1/2 left-0 w-full h-1 bg-[#008000] transform -translate-y-1/2" />
+                  </div>
                 </div>
               )}
             </div>
