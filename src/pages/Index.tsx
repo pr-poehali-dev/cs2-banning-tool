@@ -45,20 +45,15 @@ const Index = () => {
     { team: 'B', action: 'ban', count: 1 },
     { team: 'A', action: 'ban', count: 1 },
     { team: 'B', action: 'ban', count: 1 },
-    { team: 'A', action: 'side', count: 1 },
   ];
 
   const bo3Steps = [
     { team: 'A', action: 'ban', count: 1 },
     { team: 'B', action: 'ban', count: 1 },
     { team: 'A', action: 'pick', count: 1 },
-    { team: 'B', action: 'side', count: 1 },
     { team: 'B', action: 'pick', count: 1 },
-    { team: 'A', action: 'side', count: 1 },
     { team: 'B', action: 'ban', count: 1 },
     { team: 'A', action: 'ban', count: 1 },
-    { team: 'A', action: 'ban', count: 1 },
-    { team: 'B', action: 'side', count: 1 },
   ];
 
   const steps = gameMode === 'bo1' ? bo1Steps : bo3Steps;
@@ -87,30 +82,10 @@ const Index = () => {
         m.name === mapName ? { ...m, status: 'picked', pickedBy: currentTeam } : m
       ));
       moveToNextStep();
-    } else if (currentStep.action === 'side') {
-      const lastPickedMap = gameMode === 'bo1' 
-        ? maps.find(m => m.status === 'available')?.name
-        : maps.filter(m => m.status === 'picked').slice(-1)[0]?.name;
-      
-      if (lastPickedMap) {
-        setPendingMapForSide(lastPickedMap);
-        setShowSideDialog(true);
-      }
     }
   };
 
-  const handleSideSelection = (side: Side) => {
-    if (pendingMapForSide) {
-      setMaps(prev => prev.map(m => 
-        m.name === pendingMapForSide 
-          ? { ...m, side: { team: currentTeam, side } }
-          : m
-      ));
-      setShowSideDialog(false);
-      setPendingMapForSide(null);
-      moveToNextStep();
-    }
-  };
+
 
   const moveToNextStep = () => {
     if (stepIndex < steps.length - 1) {
@@ -125,7 +100,6 @@ const Index = () => {
     const teamName = currentStep.team === 'A' ? teamAName : teamBName;
     if (currentStep.action === 'ban') return `${teamName} вычеркивает ${currentStep.count} карт${currentStep.count > 1 ? 'ы' : 'у'}`;
     if (currentStep.action === 'pick') return `${teamName} выбирает карту`;
-    if (currentStep.action === 'side') return `${teamName} выбирает сторону`;
     return '';
   };
 
@@ -227,6 +201,7 @@ const Index = () => {
               ${map.status === 'picked' && map.pickedBy === 'A' ? 'bg-teamA/20 border-teamA' : ''}
               ${map.status === 'picked' && map.pickedBy === 'B' ? 'bg-teamB/20 border-teamB' : ''}
               ${map.status === 'banned' ? 'bg-destructive/20 border-destructive' : 'bg-card'}
+              ${isFinished && map.status === 'available' && gameMode === 'bo1' ? 'bg-green-500/30 border-green-500 scale-105' : ''}
             `}
           >
             <div className="h-full flex flex-col items-center justify-center p-4">
@@ -253,11 +228,12 @@ const Index = () => {
               {map.status === 'picked' && (
                 <div className="text-sm font-medium">
                   {map.pickedBy === 'A' ? teamAName : teamBName}
-                  {map.side && (
-                    <div className="mt-1 text-xs">
-                      {map.side.team === 'A' ? teamAName : teamBName}: {map.side.side}
-                    </div>
-                  )}
+                </div>
+              )}
+              
+              {isFinished && map.status === 'available' && gameMode === 'bo1' && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-green-500 font-bold text-xl">ВЫБРАНА</div>
                 </div>
               )}
             </div>
@@ -265,62 +241,30 @@ const Index = () => {
         ))}
       </div>
 
-      {isFinished && pickedMaps.length > 0 && (
+      {isFinished && (
         <div className="px-8 py-4 border-t border-border bg-card animate-fade-in">
           <h2 className="text-xl font-bold mb-3">Итоговые карты:</h2>
           <div className="space-y-2">
-            {pickedMaps.map((map, idx) => (
-              <div key={map.name} className="flex items-center justify-between text-foreground">
+            {gameMode === 'bo1' ? (
+              <div className="flex items-center justify-between text-foreground">
                 <span className="font-medium">
-                  {gameMode === 'bo3' ? `Карта ${idx + 1}` : 'Финальная карта'}: <span className="uppercase">{map.name}</span>
+                  Финальная карта: <span className="uppercase text-green-500">{maps.find(m => m.status === 'available')?.name}</span>
                 </span>
-                {map.side && (
-                  <span className={map.side.team === 'A' ? 'text-teamA' : 'text-teamB'}>
-                    {map.side.team === 'A' ? teamAName : teamBName} → {map.side.side === 'T' ? 'Terrorists' : 'Counter-Terrorists'}
-                  </span>
-                )}
               </div>
-            ))}
+            ) : (
+              pickedMaps.map((map, idx) => (
+                <div key={map.name} className="flex items-center justify-between text-foreground">
+                  <span className="font-medium">
+                    Карта {idx + 1}: <span className="uppercase">{map.name}</span>
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       )}
 
-      <Dialog open={showSideDialog} onOpenChange={setShowSideDialog}>
-        <DialogContent className="sm:max-w-md">
-          <div className="text-center space-y-6">
-            <h3 className="text-2xl font-bold">
-              {currentTeam === 'A' ? teamAName : teamBName}
-            </h3>
-            <p className="text-muted-foreground">Выберите игровую сторону</p>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => handleSideSelection('T')}
-                className="h-24 text-lg font-bold hover:bg-teamA hover:text-teamA-foreground"
-              >
-                <div className="flex flex-col items-center gap-2">
-                  <Icon name="Flame" size={32} />
-                  <span>Terrorists</span>
-                </div>
-              </Button>
-              
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => handleSideSelection('CT')}
-                className="h-24 text-lg font-bold hover:bg-teamB hover:text-teamB-foreground"
-              >
-                <div className="flex flex-col items-center gap-2">
-                  <Icon name="Shield" size={32} />
-                  <span>Counter-Terrorists</span>
-                </div>
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+
     </div>
   );
 };
