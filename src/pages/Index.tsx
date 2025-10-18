@@ -260,7 +260,8 @@ const Index = () => {
               )}
             </div>
           </button>
-        );})}
+        );
+        })}
       </div>
 
       {isFinished && (
