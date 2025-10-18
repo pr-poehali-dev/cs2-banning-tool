@@ -153,43 +153,43 @@ const Index = () => {
 
   if (phase === 'setup') {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-background">
-        <div className="w-full max-w-md space-y-6 p-8 bg-card rounded-lg border border-border animate-fade-in">
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl font-bold text-foreground">Турнир Республики Адыгея</h1>
-            <p className="text-xl text-foreground">по Counter Strike 2</p>
+      <div className="h-screen w-screen flex items-center justify-center bg-background p-4">
+        <div className="w-full max-w-2xl space-y-8 p-12 bg-card rounded-lg border border-border animate-fade-in">
+          <div className="text-center space-y-3">
+            <h1 className="text-4xl font-bold text-foreground">Турнир Республики Адыгея</h1>
+            <p className="text-2xl text-foreground">по Counter Strike 2</p>
           </div>
           
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="teamA">Команда A</Label>
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <Label htmlFor="teamA" className="text-lg">Команда A</Label>
               <Input
                 id="teamA"
                 placeholder="Введите название команды A"
                 value={teamAName}
                 onChange={(e) => setTeamAName(e.target.value)}
-                className="bg-background"
+                className="bg-background text-lg h-12"
               />
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="teamB">Команда B</Label>
+            <div className="space-y-3">
+              <Label htmlFor="teamB" className="text-lg">Команда B</Label>
               <Input
                 id="teamB"
                 placeholder="Введите название команды B"
                 value={teamBName}
                 onChange={(e) => setTeamBName(e.target.value)}
-                className="bg-background"
+                className="bg-background text-lg h-12"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Формат матча</Label>
-              <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-3">
+              <Label className="text-lg">Формат матча</Label>
+              <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setGameMode('bo1')}
-                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`px-6 py-4 rounded-lg font-medium text-lg transition-colors ${
                     gameMode === 'bo1' 
                       ? 'bg-primary text-primary-foreground' 
                       : 'bg-background text-foreground hover:bg-muted'
@@ -200,7 +200,7 @@ const Index = () => {
                 <button
                   type="button"
                   onClick={() => setGameMode('bo3')}
-                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`px-6 py-4 rounded-lg font-medium text-lg transition-colors ${
                     gameMode === 'bo3' 
                       ? 'bg-primary text-primary-foreground' 
                       : 'bg-background text-foreground hover:bg-muted'
@@ -212,7 +212,7 @@ const Index = () => {
             </div>
 
             <Button 
-              className="w-full" 
+              className="w-full text-lg h-12" 
               onClick={handleStart}
               disabled={!teamAName.trim() || !teamBName.trim()}
             >
