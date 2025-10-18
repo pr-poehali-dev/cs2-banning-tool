@@ -231,7 +231,7 @@ const Index = () => {
               map.status === 'banned' ? 'bg-black/80' :
               map.status === 'picked' && map.pickedBy === 'A' ? 'bg-teamA/30' :
               map.status === 'picked' && map.pickedBy === 'B' ? 'bg-teamB/30' :
-              isLastMap ? 'bg-green-500/40' :
+              isLastMap ? 'bg-[#008000]/50' :
               'bg-black/30 hover:bg-black/20'
             }`} />
             
