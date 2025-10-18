@@ -105,10 +105,24 @@ const Index = () => {
       setStepIndex(nextIndex);
       setCurrentTeam(steps[nextIndex].team as 'A' | 'B');
     } else {
+      setStepIndex(steps.length);
       if (gameMode === 'bo1') {
         setMaps(prev => prev.map(m => 
           m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A' } : m
         ));
+      } else if (gameMode === 'bo3') {
+        setTimeout(() => {
+          setMaps(prev => {
+            const available = prev.filter(m => m.status === 'available');
+            const picked = prev.filter(m => m.status === 'picked').length;
+            if (available.length === 1 && picked === 2) {
+              return prev.map(m => 
+                m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
+              );
+            }
+            return prev;
+          });
+        }, 100);
       }
     }
   };
