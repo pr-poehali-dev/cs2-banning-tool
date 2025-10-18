@@ -149,8 +149,8 @@ const Index = () => {
       <div className="h-screen w-screen flex items-center justify-center bg-background">
         <div className="w-full max-w-md space-y-6 p-8 bg-card rounded-lg border border-border animate-fade-in">
           <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-foreground">CS2 Map Veto</h1>
-            <p className="text-muted-foreground">Профессиональная система банов карт</p>
+            <h1 className="text-2xl font-bold text-foreground">Турнир Республики Адыгея</h1>
+            <p className="text-xl text-foreground">по Counter Strike 2</p>
           </div>
           
           <div className="space-y-4">
@@ -178,16 +178,30 @@ const Index = () => {
 
             <div className="space-y-2">
               <Label>Формат матча</Label>
-              <RadioGroup value={gameMode} onValueChange={(v) => setGameMode(v as GameMode)}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="bo1" id="bo1" />
-                  <Label htmlFor="bo1" className="cursor-pointer">Best of 1</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="bo3" id="bo3" />
-                  <Label htmlFor="bo3" className="cursor-pointer">Best of 3</Label>
-                </div>
-              </RadioGroup>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setGameMode('bo1')}
+                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                    gameMode === 'bo1' 
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'bg-background text-foreground hover:bg-muted'
+                  }`}
+                >
+                  Best of 1
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setGameMode('bo3')}
+                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                    gameMode === 'bo3' 
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'bg-background text-foreground hover:bg-muted'
+                  }`}
+                >
+                  Best of 3
+                </button>
+              </div>
             </div>
 
             <Button 
