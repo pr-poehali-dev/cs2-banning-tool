@@ -204,7 +204,7 @@ const Index = () => {
 
       <div className="flex-1 flex gap-2 p-2">
         {maps.map((map) => {
-          const isLastMap = isFinished && map.status === 'picked' && gameMode === 'bo1';
+          const isLastMap = isFinished && gameMode === 'bo1' && map.status === 'picked';
           return (
           <button
             key={map.name}
@@ -221,17 +221,17 @@ const Index = () => {
                 ? 'border-border hover:border-primary cursor-pointer hover:scale-[1.02]' 
                 : 'border-border cursor-not-allowed'
               }
-              ${map.status === 'picked' && map.pickedBy === 'A' ? 'border-teamA' : ''}
-              ${map.status === 'picked' && map.pickedBy === 'B' ? 'border-teamB' : ''}
+              ${isLastMap ? 'border-[#008000]' : ''}
+              ${!isLastMap && map.status === 'picked' && map.pickedBy === 'A' ? 'border-teamA' : ''}
+              ${!isLastMap && map.status === 'picked' && map.pickedBy === 'B' ? 'border-teamB' : ''}
               ${map.status === 'banned' ? 'border-destructive' : ''}
-              ${isLastMap ? 'border-green-500 scale-105 border-4' : ''}
             `}
           >
             <div className={`absolute inset-0 ${
+              isLastMap ? 'bg-black/80' :
               map.status === 'banned' ? 'bg-black/80' :
               map.status === 'picked' && map.pickedBy === 'A' ? 'bg-teamA/30' :
               map.status === 'picked' && map.pickedBy === 'B' ? 'bg-teamB/30' :
-              isLastMap ? 'bg-[#008000]/50' :
               'bg-black/30 hover:bg-black/20'
             }`} />
             
