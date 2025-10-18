@@ -25,7 +25,7 @@ const mapImages: Record<Map, string> = {
   ancient: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/01be0018-c4b7-4f31-a450-9ce333b09a78.jpg',
   overpass: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/6d89b204-a494-43b5-b5ba-97f49d6ea70e.jpg',
   train: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/80dc5c89-a8ad-489d-b666-5ebe9df3e2c6.jpg',
-  dust: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/9c8de4fb-f947-4000-af36-e14459216a31.jpg',
+  dust: 'https://cdn.poehali.dev/files/8ac11166-e9a7-42c2-b0d4-00ddcd5f2764.png',
   mirage: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/17b724b2-8692-4418-a712-9ff5a640bf1f.jpg',
 };
 
