@@ -18,6 +18,16 @@ interface MapState {
   side?: { team: 'A' | 'B'; side: Side };
 }
 
+const mapImages: Record<Map, string> = {
+  nuke: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/0a0d48ff-4281-495e-ba49-801f0deb791c.jpg',
+  inferno: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/d06fd099-3cfb-4115-bfcc-80a0463f7b2e.jpg',
+  ancient: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/01be0018-c4b7-4f31-a450-9ce333b09a78.jpg',
+  overpass: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/6d89b204-a494-43b5-b5ba-97f49d6ea70e.jpg',
+  train: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/80dc5c89-a8ad-489d-b666-5ebe9df3e2c6.jpg',
+  dust: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/9c8de4fb-f947-4000-af36-e14459216a31.jpg',
+  mirage: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/17b724b2-8692-4418-a712-9ff5a640bf1f.jpg',
+};
+
 const Index = () => {
   const [phase, setPhase] = useState<Phase>('setup');
   const [teamAName, setTeamAName] = useState('');
@@ -193,58 +203,64 @@ const Index = () => {
       </div>
 
       <div className="flex-1 flex gap-2 p-2">
-        {maps.map((map) => (
+        {maps.map((map) => {
+          const isLastMap = isFinished && map.status === 'picked' && gameMode === 'bo1';
+          return (
           <button
             key={map.name}
             onClick={() => handleMapClick(map.name)}
             disabled={map.status !== 'available' || isFinished}
+            style={{
+              backgroundImage: `url(${mapImages[map.name]})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
             className={`
               flex-1 relative overflow-hidden rounded-lg border-2 transition-all
               ${map.status === 'available' 
                 ? 'border-border hover:border-primary cursor-pointer hover:scale-[1.02]' 
-                : 'border-border opacity-40 cursor-not-allowed'
+                : 'border-border cursor-not-allowed'
               }
-              ${map.status === 'picked' && map.pickedBy === 'A' ? 'bg-teamA/20 border-teamA' : ''}
-              ${map.status === 'picked' && map.pickedBy === 'B' ? 'bg-teamB/20 border-teamB' : ''}
-              ${map.status === 'banned' ? 'bg-destructive/20 border-destructive' : 'bg-card'}
-              ${isFinished && map.status === 'available' && gameMode === 'bo1' ? 'bg-green-500/30 border-green-500 scale-105' : ''}
+              ${map.status === 'picked' && map.pickedBy === 'A' ? 'border-teamA' : ''}
+              ${map.status === 'picked' && map.pickedBy === 'B' ? 'border-teamB' : ''}
+              ${map.status === 'banned' ? 'border-destructive' : ''}
+              ${isLastMap ? 'border-green-500 scale-105 border-4' : ''}
             `}
           >
-            <div className="h-full flex flex-col items-center justify-center p-4">
-              <div className="text-4xl mb-4">
-                {map.name === 'nuke' && '☢️'}
-                {map.name === 'inferno' && '🔥'}
-                {map.name === 'ancient' && '🏛️'}
-                {map.name === 'overpass' && '🌉'}
-                {map.name === 'train' && '🚂'}
-                {map.name === 'dust' && '🏜️'}
-                {map.name === 'mirage' && '🕌'}
-              </div>
-              <div className="text-2xl font-bold uppercase tracking-wider mb-2">
+            <div className={`absolute inset-0 ${
+              map.status === 'banned' ? 'bg-black/80' :
+              map.status === 'picked' && map.pickedBy === 'A' ? 'bg-teamA/30' :
+              map.status === 'picked' && map.pickedBy === 'B' ? 'bg-teamB/30' :
+              isLastMap ? 'bg-green-500/40' :
+              'bg-black/30 hover:bg-black/20'
+            }`} />
+            
+            <div className="h-full flex flex-col items-center justify-center p-4 relative z-10">
+              <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 {map.name}
               </div>
               
               {map.status === 'banned' && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-full h-1 bg-destructive rotate-12" />
-                  <div className="absolute text-destructive font-bold text-xl">BANNED</div>
+                  <div className="absolute text-destructive font-bold text-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">BANNED</div>
                 </div>
               )}
               
               {map.status === 'picked' && (
-                <div className="text-sm font-medium">
+                <div className="text-sm font-bold mt-2 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {map.pickedBy === 'A' ? teamAName : teamBName}
                 </div>
               )}
               
-              {isFinished && map.status === 'available' && gameMode === 'bo1' && (
+              {isLastMap && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-green-500 font-bold text-xl">ВЫБРАНА</div>
+                  <div className="text-green-400 font-bold text-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">ВЫБРАНА</div>
                 </div>
               )}
             </div>
           </button>
-        ))}
+        );})}
       </div>
 
       {isFinished && (
