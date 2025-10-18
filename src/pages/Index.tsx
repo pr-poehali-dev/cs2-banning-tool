@@ -92,6 +92,12 @@ const Index = () => {
       const nextIndex = stepIndex + 1;
       setStepIndex(nextIndex);
       setCurrentTeam(steps[nextIndex].team as 'A' | 'B');
+    } else {
+      if (gameMode === 'bo1') {
+        setMaps(prev => prev.map(m => 
+          m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A' } : m
+        ));
+      }
     }
   };
 
