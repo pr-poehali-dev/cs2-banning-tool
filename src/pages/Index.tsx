@@ -123,26 +123,19 @@ const Index = () => {
 
   const pickedMaps = maps.filter(m => m.status === 'picked');
   const isFinished = stepIndex >= steps.length;
+  const availableCount = maps.filter(m => m.status === 'available').length;
+  const pickedCount = maps.filter(m => m.status === 'picked').length;
+  const bannedCount = maps.filter(m => m.status === 'banned').length;
 
   useEffect(() => {
-    if (isFinished && gameMode === 'bo3') {
-      const availableMaps = maps.filter(m => m.status === 'available');
-      const pickedCount = maps.filter(m => m.status === 'picked').length;
-      
-      if (availableMaps.length === 1 && pickedCount === 2) {
-        const pickOrder = 3;
-        setMaps(prev => {
-          const hasUnpicked = prev.some(m => m.status === 'available');
-          if (hasUnpicked) {
-            return prev.map(m => 
-              m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder } : m
-            );
-          }
-          return prev;
-        });
-      }
+    if (isFinished && gameMode === 'bo3' && availableCount === 1 && pickedCount === 2 && bannedCount === 4) {
+      setMaps(prev => 
+        prev.map(m => 
+          m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
+        )
+      );
     }
-  }, [isFinished, gameMode]);
+  }, [isFinished, gameMode, availableCount, pickedCount, bannedCount]);
 
   if (phase === 'setup') {
     return (
