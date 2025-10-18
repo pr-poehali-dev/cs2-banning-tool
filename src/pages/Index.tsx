@@ -315,24 +315,26 @@ const Index = () => {
 
       {isFinished && (
         <div className="px-8 py-4 border-t border-border bg-card animate-fade-in">
-          <h2 className="text-xl font-bold mb-3">Итоговые карты:</h2>
-          <div className="space-y-2">
-            {gameMode === 'bo1' ? (
-              <div className="flex items-center justify-between text-foreground">
-                <span className="font-medium">
-                  Финальная карта: <span className="uppercase text-green-500">{maps.find(m => m.status === 'available')?.name}</span>
-                </span>
+          {gameMode === 'bo1' ? (
+            <div className="flex items-center justify-center">
+              <span className="text-4xl font-bold uppercase text-green-500">
+                {maps.find(m => m.status === 'picked')?.name || maps.find(m => m.status === 'available')?.name}
+              </span>
+            </div>
+          ) : (
+            <>
+              <h2 className="text-xl font-bold mb-3">Итоговые карты:</h2>
+              <div className="space-y-2">
+                {pickedMaps.map((map, idx) => (
+                  <div key={map.name} className="flex items-center justify-between text-foreground">
+                    <span className="font-medium">
+                      Карта {idx + 1}: <span className="uppercase">{map.name}</span>
+                    </span>
+                  </div>
+                ))}
               </div>
-            ) : (
-              pickedMaps.map((map, idx) => (
-                <div key={map.name} className="flex items-center justify-between text-foreground">
-                  <span className="font-medium">
-                    Карта {idx + 1}: <span className="uppercase">{map.name}</span>
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
+            </>
+          )}
         </div>
       )}
 
