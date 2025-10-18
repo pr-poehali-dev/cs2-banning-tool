@@ -20,7 +20,7 @@ interface MapState {
 }
 
 const mapImages: Record<Map, string> = {
-  nuke: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/0a0d48ff-4281-495e-ba49-801f0deb791c.jpg',
+  nuke: 'https://cdn.poehali.dev/files/c54f9b6c-d9e9-447d-90fb-72ba490168e3.png',
   inferno: 'https://cdn.poehali.dev/files/b56a4409-13e1-4101-85c8-94dd4f614d22.png',
   ancient: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/01be0018-c4b7-4f31-a450-9ce333b09a78.jpg',
   overpass: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/6d89b204-a494-43b5-b5ba-97f49d6ea70e.jpg',
