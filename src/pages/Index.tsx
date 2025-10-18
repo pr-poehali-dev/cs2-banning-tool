@@ -39,10 +39,13 @@ const Index = () => {
   ]);
 
   const bo1Steps = [
-    { team: 'A', action: 'ban', count: 2 },
-    { team: 'B', action: 'ban', count: 3 },
     { team: 'A', action: 'ban', count: 1 },
-    { team: 'B', action: 'side', count: 1 },
+    { team: 'B', action: 'ban', count: 1 },
+    { team: 'A', action: 'ban', count: 1 },
+    { team: 'B', action: 'ban', count: 1 },
+    { team: 'A', action: 'ban', count: 1 },
+    { team: 'B', action: 'ban', count: 1 },
+    { team: 'A', action: 'side', count: 1 },
   ];
 
   const bo3Steps = [
