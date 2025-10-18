@@ -236,14 +236,18 @@ const Index = () => {
             }`} />
             
             <div className="h-full flex flex-col items-center justify-center p-4 relative z-10">
-              <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                {map.name}
-              </div>
+              {map.status !== 'banned' && (
+                <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  {map.name}
+                </div>
+              )}
               
               {map.status === 'banned' && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-1 bg-destructive rotate-12" />
-                  <div className="absolute text-destructive font-bold text-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">BANNED</div>
+                  <div className="relative">
+                    <div className="text-red-500 font-bold text-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">BANNED</div>
+                    <div className="absolute top-1/2 left-0 w-full h-1 bg-red-500 transform -translate-y-1/2" />
+                  </div>
                 </div>
               )}
               
