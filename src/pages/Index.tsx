@@ -259,19 +259,19 @@ const Index = () => {
               backgroundPosition: 'center',
             }}
             className={`
-              flex-1 relative overflow-hidden rounded-lg border-2 transition-all
+              flex-1 relative overflow-hidden rounded-lg border-4 transition-all
               ${map.status === 'available' 
                 ? 'border-border hover:border-primary cursor-pointer hover:scale-[1.02]' 
                 : 'border-border cursor-not-allowed'
               }
-              ${isLastMap ? 'border-[#008000]' : ''}
+              ${isLastMap ? 'border-[#00ff00]' : ''}
               ${!isLastMap && map.status === 'picked' && map.pickedBy === 'A' ? 'border-teamA' : ''}
               ${!isLastMap && map.status === 'picked' && map.pickedBy === 'B' ? 'border-teamB' : ''}
               ${map.status === 'banned' ? 'border-destructive' : ''}
             `}
           >
             <div className={`absolute inset-0 ${
-              isLastMap ? 'bg-black/80' :
+              isLastMap ? 'bg-black/30' :
               map.status === 'banned' ? 'bg-black/80' :
               map.status === 'picked' && map.pickedBy === 'A' ? 'bg-teamA/30' :
               map.status === 'picked' && map.pickedBy === 'B' ? 'bg-teamB/30' :
@@ -279,7 +279,7 @@ const Index = () => {
             }`} />
             
             <div className="h-full flex flex-col items-center justify-center p-4 relative z-10">
-              {map.status !== 'banned' && !isLastMap && (
+              {map.status !== 'banned' && (
                 <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {map.status === 'picked' && gameMode === 'bo3' ? map.pickOrder : map.name}
                 </div>
@@ -297,12 +297,6 @@ const Index = () => {
               {map.status === 'picked' && !isLastMap && gameMode === 'bo3' && (
                 <div className="text-sm font-bold mt-2 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {map.pickedBy === 'A' ? teamAName : teamBName}
-                </div>
-              )}
-              
-              {isLastMap && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-[#008000] font-bold text-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">CHOSEN</div>
                 </div>
               )}
             </div>
