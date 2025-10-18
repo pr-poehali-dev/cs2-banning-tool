@@ -251,7 +251,7 @@ const Index = () => {
                 </div>
               )}
               
-              {map.status === 'picked' && !isLastMap && (
+              {map.status === 'picked' && !isLastMap && gameMode === 'bo3' && (
                 <div className="text-sm font-bold mt-2 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {map.pickedBy === 'A' ? teamAName : teamBName}
                 </div>
