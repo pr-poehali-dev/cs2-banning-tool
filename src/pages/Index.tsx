@@ -20,13 +20,13 @@ interface MapState {
 }
 
 const mapImages: Record<Map, string> = {
-  nuke: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/0a0d48ff-4281-495e-ba49-801f0deb791c.jpg',
-  inferno: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/d06fd099-3cfb-4115-bfcc-80a0463f7b2e.jpg',
-  ancient: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/01be0018-c4b7-4f31-a450-9ce333b09a78.jpg',
-  overpass: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/6d89b204-a494-43b5-b5ba-97f49d6ea70e.jpg',
-  train: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/80dc5c89-a8ad-489d-b666-5ebe9df3e2c6.jpg',
-  dust: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/9c8de4fb-f947-4000-af36-e14459216a31.jpg',
-  mirage: 'https://cdn.poehali.dev/projects/c1f1be23-1b98-486b-93de-c5794789927b/files/17b724b2-8692-4418-a712-9ff5a640bf1f.jpg',
+  nuke: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_nuke.jpg',
+  inferno: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_inferno.jpg',
+  ancient: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_ancient.jpg',
+  overpass: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_overpass.jpg',
+  train: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_train.jpg',
+  dust: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_dust2.jpg',
+  mirage: 'https://raw.githubusercontent.com/ghostcap-gaming/cs2-map-images/main/standard/de_mirage.jpg',
 };
 
 const Index = () => {
