@@ -116,9 +116,12 @@ const Index = () => {
         : m
     ));
     
-    setShowSideDialog(false);
     setPendingMapForSide(null);
-    moveToNextStep();
+    setShowSideDialog(false);
+    
+    if (stepIndex < steps.length) {
+      moveToNextStep();
+    }
   };
 
   const moveToNextStep = () => {
@@ -132,24 +135,6 @@ const Index = () => {
         setMaps(prev => prev.map(m => 
           m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A' } : m
         ));
-      } else if (gameMode === 'bo3') {
-        const available = maps.filter(m => m.status === 'available');
-        const picked = maps.filter(m => m.status === 'picked').length;
-        if (available.length === 1 && picked === 2) {
-          const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
-          const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
-          const lastMap = available[0];
-          
-          setMaps(prev => prev.map(m => 
-            m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
-          ));
-          
-          setTimeout(() => {
-            setPendingMapForSide(lastMap.name);
-            setCurrentTeam(sideChoosingTeam);
-            setShowSideDialog(true);
-          }, 200);
-        }
       }
     }
   };
@@ -167,6 +152,27 @@ const Index = () => {
   const availableCount = maps.filter(m => m.status === 'available').length;
   const pickedCount = maps.filter(m => m.status === 'picked').length;
   const bannedCount = maps.filter(m => m.status === 'banned').length;
+
+  useEffect(() => {
+    if (gameMode === 'bo3' && isFinished && availableCount === 1 && pickedCount === 2 && !showSideDialog && !pendingMapForSide) {
+      const available = maps.filter(m => m.status === 'available');
+      if (available.length === 1) {
+        const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
+        const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
+        const lastMap = available[0];
+        
+        setMaps(prev => prev.map(m => 
+          m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
+        ));
+        
+        setTimeout(() => {
+          setPendingMapForSide(lastMap.name);
+          setCurrentTeam(sideChoosingTeam);
+          setShowSideDialog(true);
+        }, 300);
+      }
+    }
+  }, [gameMode, isFinished, availableCount, pickedCount, showSideDialog, pendingMapForSide, maps, steps]);
 
 
 
