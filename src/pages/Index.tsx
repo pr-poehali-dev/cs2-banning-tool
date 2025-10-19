@@ -196,7 +196,7 @@ const Index = () => {
         }}
       >
         <div className="w-full max-w-xl ml-[12.5%] space-y-6">
-          <div className="flex items-center justify-around gap-8 p-6 bg-black/40 backdrop-blur-md rounded-lg border border-white/20">
+          <div className="flex items-center justify-around gap-8 p-6 bg-black/40 backdrop-blur-md rounded-3xl border border-white/20">
             <img 
               src="https://cdn.poehali.dev/files/85d66b6b-1cfe-4982-83bb-98a653bf6bd6.png" 
               alt="Лого" 
@@ -209,7 +209,7 @@ const Index = () => {
             />
           </div>
           
-          <div className="space-y-8 p-12 bg-black/40 backdrop-blur-md rounded-lg border border-white/20 animate-fade-in">
+          <div className="space-y-8 p-12 bg-black/40 backdrop-blur-md rounded-3xl border border-white/20 animate-fade-in">
           <div className="text-center space-y-3">
             <h1 className="text-4xl font-bold text-foreground">Турнир Республики Адыгея</h1>
             <p className="text-2xl text-foreground">по Counter Strike 2</p>
