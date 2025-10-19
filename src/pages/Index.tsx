@@ -186,7 +186,7 @@ const Index = () => {
   if (phase === 'setup') {
     return (
       <div 
-        className="h-screen w-screen flex items-center justify-center p-4 relative overflow-hidden"
+        className="h-screen w-screen flex items-center p-4 relative overflow-hidden"
         style={{
           backgroundImage: 'url(https://cdn.poehali.dev/files/761b2da9-f23a-4178-a08e-1f2bde7cd254.png)',
           backgroundSize: 'auto 100%',
@@ -195,7 +195,7 @@ const Index = () => {
           backgroundColor: '#1a1a1a'
         }}
       >
-        <div className="w-full max-w-2xl space-y-8 p-12 bg-card/95 backdrop-blur-sm rounded-lg border border-border animate-fade-in">
+        <div className="w-full max-w-xl ml-[12.5%] space-y-8 p-12 bg-black/40 backdrop-blur-md rounded-lg border border-white/20 animate-fade-in">
           <div className="text-center space-y-3">
             <h1 className="text-4xl font-bold text-foreground">Турнир Республики Адыгея</h1>
             <p className="text-2xl text-foreground">по Counter Strike 2</p>
