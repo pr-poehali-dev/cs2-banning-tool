@@ -443,18 +443,29 @@ const Index = () => {
             </div>
           ) : (
             <>
-              <h2 className="text-xl font-bold mb-3">Итоговые карты:</h2>
-              <div className="space-y-2 mb-4">
+              <h2 className="text-xl font-bold mb-4">Итоговые карты:</h2>
+              <div className="grid grid-cols-3 gap-4 mb-4">
                 {pickedMaps.map((map, idx) => (
-                  <div key={map.name} className="flex items-center justify-between text-foreground">
-                    <span className="font-medium">
-                      Карта {idx + 1}: <span className="uppercase">{map.name}</span>
-                    </span>
-                    {map.side && (
-                      <span className="text-sm text-muted-foreground">
-                        {map.side.team === 'A' ? teamAName : teamBName} - {map.side.side}
-                      </span>
-                    )}
+                  <div key={map.name} className="relative overflow-hidden rounded-lg border border-border">
+                    <div 
+                      className="h-40 bg-cover bg-center relative"
+                      style={{ backgroundImage: `url(${mapImages[map.name]})` }}
+                    >
+                      <div className="absolute inset-0 bg-black/40" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
+                        <div className="text-xs font-semibold text-white/70 uppercase tracking-wide">
+                          Карта {idx + 1}
+                        </div>
+                        <div className="text-2xl font-bold uppercase text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                          {map.name}
+                        </div>
+                        {map.side && (
+                          <div className="text-sm text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                            {map.side.team === 'A' ? teamAName : teamBName} - {map.side.side}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
