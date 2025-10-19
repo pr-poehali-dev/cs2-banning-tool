@@ -150,7 +150,9 @@ const Index = () => {
         setIsProcessingLastMap(true);
         const lastMap = available[0];
         
-        setIsTransitioning(true);
+        setTimeout(() => {
+          setIsTransitioning(true);
+        }, 100);
         
         setTimeout(() => {
           setMaps(prev => prev.map(m => 
@@ -158,11 +160,7 @@ const Index = () => {
               ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } 
               : m
           ));
-          
-          setTimeout(() => {
-            setIsTransitioning(false);
-          }, 100);
-        }, 800);
+        }, 500);
       }
     }
   }, [gameMode, isFinished, isProcessingLastMap, maps]);

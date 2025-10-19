@@ -14,7 +14,7 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
   });
   
   return (
-    <div className="h-screen w-screen flex items-center justify-center gap-4 p-4 bg-background animate-slide-in">
+    <div className="h-screen w-screen flex items-center justify-center gap-6 p-8 bg-background animate-slide-in">
       {sortedMaps.map((map, index) => {
         const teamASide = map.side?.team === 'A' ? map.side.side : (map.side?.team === 'B' ? (map.side.side === 'T' ? 'CT' : 'T') : 'N/A');
         const teamBSide = map.side?.team === 'B' ? map.side.side : (map.side?.team === 'A' ? (map.side.side === 'T' ? 'CT' : 'T') : 'N/A');
@@ -27,9 +27,9 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
               backgroundImage: `url(${mapImages[map.name]})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              animationDelay: `${index * 0.15}s`
+              animationDelay: `${index * 0.2}s`
             }}
-            className="flex-1 h-full relative overflow-hidden rounded-lg border-4 border-primary animate-fade-in"
+            className="flex-1 h-full relative overflow-hidden rounded-xl border-4 border-primary animate-fade-in shadow-2xl"
           >
             <div className="absolute inset-0 bg-black/40" />
             
