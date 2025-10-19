@@ -164,9 +164,11 @@ const Index = () => {
   const bannedCount = maps.filter(m => m.status === 'banned').length;
 
   useEffect(() => {
-    if (gameMode === 'bo3' && isFinished && availableCount === 1 && pickedCount === 2 && !showSideDialog && !pendingMapForSide && !isProcessingLastMap) {
+    if (gameMode === 'bo3' && isFinished && !isProcessingLastMap) {
       const available = maps.filter(m => m.status === 'available');
-      if (available.length === 1) {
+      const picked = maps.filter(m => m.status === 'picked');
+      
+      if (available.length === 1 && picked.length === 2 && !showSideDialog && !pendingMapForSide) {
         setIsProcessingLastMap(true);
         const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
         const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
@@ -177,7 +179,7 @@ const Index = () => {
         setShowSideDialog(true);
       }
     }
-  }, [gameMode, isFinished, availableCount, pickedCount, showSideDialog, pendingMapForSide, isProcessingLastMap, maps, steps]);
+  }, [gameMode, isFinished, isProcessingLastMap, showSideDialog, pendingMapForSide, maps, steps]);
 
 
 
@@ -265,13 +267,9 @@ const Index = () => {
     );
   }
 
-  if (isFinished && gameMode === 'bo3') {
-    const allMapsHaveSides = pickedMaps.every(map => map.side !== undefined);
-    
-    if (!allMapsHaveSides) {
-      return null;
-    }
-    
+  const shouldShowFinalScreen = isFinished && gameMode === 'bo3' && pickedMaps.length === 3 && pickedMaps.every(map => map.side !== undefined) && !isProcessingLastMap;
+
+  if (shouldShowFinalScreen) {
     return (
       <div className="h-screen w-screen flex items-center justify-center gap-4 p-4 bg-background">
         {pickedMaps.map((map) => {
