@@ -305,6 +305,7 @@ const Index = () => {
         {sortedMaps.map((map) => {
           const teamASide = map.side?.team === 'A' ? map.side.side : (map.side?.team === 'B' ? (map.side.side === 'T' ? 'CT' : 'T') : 'N/A');
           const teamBSide = map.side?.team === 'B' ? map.side.side : (map.side?.team === 'A' ? (map.side.side === 'T' ? 'CT' : 'T') : 'N/A');
+          const isThirdMap = map.pickOrder === 3;
           
           return (
             <div
@@ -319,14 +320,16 @@ const Index = () => {
               <div className="absolute inset-0 bg-black/40" />
               
               <div className="h-full flex flex-col items-center justify-between p-8 relative z-10">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
-                    {teamAName}
+                {!isThirdMap && (
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
+                      {teamAName}
+                    </div>
+                    <div className="text-5xl font-bold text-orange-500 drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-2">
+                      {teamASide}
+                    </div>
                   </div>
-                  <div className="text-5xl font-bold text-orange-500 drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-2">
-                    {teamASide}
-                  </div>
-                </div>
+                )}
                 
                 <div className="text-center">
                   <div className="text-xs font-semibold text-white/70 uppercase tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-2">
@@ -338,12 +341,20 @@ const Index = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-5xl font-bold text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
-                    {teamBSide}
-                  </div>
-                  <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-2">
-                    {teamBName}
-                  </div>
+                  {isThirdMap ? (
+                    <div className="text-2xl font-semibold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
+                      Стороны выберутся по итогам<br />ножевого раунда
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-5xl font-bold text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
+                        {teamBSide}
+                      </div>
+                      <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-2">
+                        {teamBName}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
