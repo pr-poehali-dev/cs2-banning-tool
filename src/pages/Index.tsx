@@ -360,7 +360,7 @@ const Index = () => {
           ) : (
             <>
               <h2 className="text-xl font-bold mb-3">Итоговые карты:</h2>
-              <div className="space-y-2">
+              <div className="space-y-2 mb-4">
                 {pickedMaps.map((map, idx) => (
                   <div key={map.name} className="flex items-center justify-between text-foreground">
                     <span className="font-medium">
@@ -373,6 +373,26 @@ const Index = () => {
                     )}
                   </div>
                 ))}
+              </div>
+              <div className="border-t border-border pt-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-lg">{teamAName}:</span>
+                  <span className="text-muted-foreground">
+                    {pickedMaps
+                      .filter(m => m.side?.team === 'A')
+                      .map(m => m.side?.side)
+                      .join(', ') || 'Нет данных'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-lg">{teamBName}:</span>
+                  <span className="text-muted-foreground">
+                    {pickedMaps
+                      .filter(m => m.side?.team === 'B')
+                      .map(m => m.side?.side)
+                      .join(', ') || 'Нет данных'}
+                  </span>
+                </div>
               </div>
             </>
           )}
