@@ -366,7 +366,14 @@ const Index = () => {
       </div>
 
       <div className="flex-1 flex gap-2 p-2">
-        {maps.map((map) => {
+        {[...maps].sort((a, b) => {
+          if (gameMode === 'bo3' && isFinished) {
+            const aOrder = a.pickOrder || 999;
+            const bOrder = b.pickOrder || 999;
+            return aOrder - bOrder;
+          }
+          return 0;
+        }).map((map) => {
           const isLastMap = isFinished && gameMode === 'bo1' && map.status === 'picked';
           return (
           <button
@@ -410,14 +417,14 @@ const Index = () => {
               
               {map.status === 'picked' && gameMode === 'bo3' && (
                 <div className="flex flex-col items-center gap-2">
-                  <div className="text-sm font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                    {map.pickOrder === 3 ? 'Аутсайдер' : (map.pickedBy === 'A' ? teamAName : teamBName)}
+                  <div className="text-xs font-semibold text-white/70 uppercase tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    Карта {map.pickOrder}
                   </div>
                   <div className="text-2xl font-bold uppercase tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                     {map.name}
                   </div>
                   <div className="text-sm font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                    Карта {map.pickOrder}
+                    {map.pickOrder === 3 ? 'Аутсайдер' : (map.pickedBy === 'A' ? teamAName : teamBName)}
                   </div>
                 </div>
               )}
