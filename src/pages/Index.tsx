@@ -484,7 +484,7 @@ const Index = () => {
       )}
 
       <Dialog open={showSideDialog} onOpenChange={setShowSideDialog}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()}>
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-2">Выбор стороны</h2>
