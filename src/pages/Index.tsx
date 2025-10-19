@@ -95,7 +95,9 @@ const Index = () => {
       ));
       
       if (gameMode === 'bo3') {
+        const oppositeTeam = currentTeam === 'A' ? 'B' : 'A';
         setPendingMapForSide(mapName);
+        setCurrentTeam(oppositeTeam);
         setShowSideDialog(true);
       } else {
         moveToNextStep();
@@ -108,11 +110,9 @@ const Index = () => {
   const handleSideChoice = (side: Side) => {
     if (!pendingMapForSide) return;
     
-    const oppositeTeam = currentTeam === 'A' ? 'B' : 'A';
-    
     setMaps(prev => prev.map(m => 
       m.name === pendingMapForSide 
-        ? { ...m, side: { team: oppositeTeam, side } } 
+        ? { ...m, side: { team: currentTeam, side } } 
         : m
     ));
     
@@ -133,24 +133,23 @@ const Index = () => {
           m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A' } : m
         ));
       } else if (gameMode === 'bo3') {
-        setTimeout(() => {
-          setMaps(prev => {
-            const available = prev.filter(m => m.status === 'available');
-            const picked = prev.filter(m => m.status === 'picked').length;
-            if (available.length === 1 && picked === 2) {
-              const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
-              const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
-              const lastMap = available[0];
-              setPendingMapForSide(lastMap.name);
-              setCurrentTeam(sideChoosingTeam);
-              setShowSideDialog(true);
-              return prev.map(m => 
-                m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
-              );
-            }
-            return prev;
-          });
-        }, 100);
+        const available = maps.filter(m => m.status === 'available');
+        const picked = maps.filter(m => m.status === 'picked').length;
+        if (available.length === 1 && picked === 2) {
+          const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
+          const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
+          const lastMap = available[0];
+          
+          setMaps(prev => prev.map(m => 
+            m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
+          ));
+          
+          setTimeout(() => {
+            setPendingMapForSide(lastMap.name);
+            setCurrentTeam(sideChoosingTeam);
+            setShowSideDialog(true);
+          }, 200);
+        }
       }
     }
   };
@@ -169,15 +168,7 @@ const Index = () => {
   const pickedCount = maps.filter(m => m.status === 'picked').length;
   const bannedCount = maps.filter(m => m.status === 'banned').length;
 
-  useEffect(() => {
-    if (isFinished && gameMode === 'bo3' && availableCount === 1 && pickedCount === 2 && bannedCount === 4) {
-      setMaps(prev => 
-        prev.map(m => 
-          m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
-        )
-      );
-    }
-  }, [isFinished, gameMode, availableCount, pickedCount, bannedCount]);
+
 
   if (phase === 'setup') {
     return (
