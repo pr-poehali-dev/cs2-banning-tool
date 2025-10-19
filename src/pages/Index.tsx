@@ -142,11 +142,11 @@ const Index = () => {
   const bannedCount = maps.filter(m => m.status === 'banned').length;
 
   useEffect(() => {
-    if (gameMode === 'bo3' && isFinished && !isProcessingLastMap) {
+    if (gameMode === 'bo3' && isFinished) {
       const available = maps.filter(m => m.status === 'available');
       const picked = maps.filter(m => m.status === 'picked');
       
-      if (available.length === 1 && picked.length === 2) {
+      if (available.length === 1 && picked.length === 2 && !isProcessingLastMap) {
         setIsProcessingLastMap(true);
         const lastMap = available[0];
         
@@ -158,6 +158,10 @@ const Index = () => {
               ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } 
               : m
           ));
+          
+          setTimeout(() => {
+            setIsTransitioning(false);
+          }, 100);
         }, 800);
       }
     }
@@ -181,9 +185,7 @@ const Index = () => {
     return <FinalScreenBo1 maps={maps} />;
   }
 
-  const shouldShowFinalScreen = isFinished && gameMode === 'bo3' && pickedMaps.length === 3 && !isProcessingLastMap;
-
-  if (shouldShowFinalScreen) {
+  if (isFinished && gameMode === 'bo3' && pickedMaps.length === 3) {
     return (
       <FinalScreenBo3 
         pickedMaps={pickedMaps}
