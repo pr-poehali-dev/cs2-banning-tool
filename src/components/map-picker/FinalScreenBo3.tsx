@@ -32,7 +32,7 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
           >
             <div className="absolute inset-0 bg-black/40" />
             
-            <div className="h-full flex flex-col items-center justify-between p-8 relative z-10">
+            <div className={`h-full flex flex-col items-center p-8 relative z-10 ${isThirdMap ? 'justify-center' : 'justify-between'}`}>
               {!isThirdMap && (
                 <div className="text-center">
                   <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
@@ -44,8 +44,6 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
                 </div>
               )}
               
-              {isThirdMap && <div className="flex-1"></div>}
-              
               <div className="text-center">
                 <div className="text-xs font-semibold text-white/70 uppercase tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-2">
                   Карта {map.pickOrder}
@@ -55,24 +53,16 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
                 </div>
               </div>
               
-              {isThirdMap && <div className="flex-1"></div>}
-              
-              <div className="text-center">
-                {isThirdMap ? (
-                  <div className="text-2xl font-semibold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
-                    Стороны выберутся по итогам<br />ножевого раунда
+              {!isThirdMap && (
+                <div className="text-center">
+                  <div className="text-5xl font-bold text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
+                    {teamBSide}
                   </div>
-                ) : (
-                  <>
-                    <div className="text-5xl font-bold text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
-                      {teamBSide}
-                    </div>
-                    <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-2">
-                      {teamBName}
-                    </div>
-                  </>
-                )}
-              </div>
+                  <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-2">
+                    {teamBName}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         );
