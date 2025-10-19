@@ -195,7 +195,21 @@ const Index = () => {
           backgroundColor: '#1a1a1a'
         }}
       >
-        <div className="w-full max-w-xl ml-[12.5%] space-y-8 p-12 bg-black/40 backdrop-blur-md rounded-lg border border-white/20 animate-fade-in">
+        <div className="w-full max-w-xl ml-[12.5%] space-y-6">
+          <div className="flex items-center justify-between gap-4 px-4">
+            <img 
+              src="https://cdn.poehali.dev/files/85d66b6b-1cfe-4982-83bb-98a653bf6bd6.png" 
+              alt="Лого" 
+              className="h-20 object-contain"
+            />
+            <img 
+              src="https://cdn.poehali.dev/files/cb97be14-4858-4b8c-a87a-5ce23c4a4432.png" 
+              alt="Community" 
+              className="h-20 object-contain"
+            />
+          </div>
+          
+          <div className="space-y-8 p-12 bg-black/40 backdrop-blur-md rounded-lg border border-white/20 animate-fade-in">
           <div className="text-center space-y-3">
             <h1 className="text-4xl font-bold text-foreground">Турнир Республики Адыгея</h1>
             <p className="text-2xl text-foreground">по Counter Strike 2</p>
@@ -260,6 +274,7 @@ const Index = () => {
               Начать банить
             </Button>
           </div>
+        </div>
         </div>
       </div>
     );
