@@ -261,6 +261,12 @@ const Index = () => {
   }
 
   if (isFinished && gameMode === 'bo3') {
+    const allMapsHaveSides = pickedMaps.every(map => map.side !== undefined);
+    
+    if (!allMapsHaveSides) {
+      return null;
+    }
+    
     return (
       <div className="h-screen w-screen flex items-center justify-center gap-4 p-4 bg-background">
         {pickedMaps.map((map) => {
