@@ -14,8 +14,8 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
   });
   
   return (
-    <div className="h-screen w-screen flex items-center justify-center gap-4 p-4 bg-background">
-      {sortedMaps.map((map) => {
+    <div className="h-screen w-screen flex items-center justify-center gap-4 p-4 bg-background animate-slide-in">
+      {sortedMaps.map((map, index) => {
         const teamASide = map.side?.team === 'A' ? map.side.side : (map.side?.team === 'B' ? (map.side.side === 'T' ? 'CT' : 'T') : 'N/A');
         const teamBSide = map.side?.team === 'B' ? map.side.side : (map.side?.team === 'A' ? (map.side.side === 'T' ? 'CT' : 'T') : 'N/A');
         const isThirdMap = map.pickOrder === 3;
@@ -28,7 +28,8 @@ export const FinalScreenBo3 = ({ pickedMaps, teamAName, teamBName }: FinalScreen
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
-            className="flex-1 h-full relative overflow-hidden rounded-lg border-4 border-primary animate-fade-in"
+            className="flex-1 h-full relative overflow-hidden rounded-lg border-4 border-primary"
+            style={{ animationDelay: `${index * 0.15}s` }}
           >
             <div className="absolute inset-0 bg-black/40" />
             

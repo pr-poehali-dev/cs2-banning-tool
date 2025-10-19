@@ -18,6 +18,7 @@ const Index = () => {
   const [showSideDialog, setShowSideDialog] = useState(false);
   const [pendingMapForSide, setPendingMapForSide] = useState<Map | null>(null);
   const [isProcessingLastMap, setIsProcessingLastMap] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   const [maps, setMaps] = useState<MapState[]>([
     { name: 'nuke', status: 'available' },
@@ -145,18 +146,22 @@ const Index = () => {
       const available = maps.filter(m => m.status === 'available');
       const picked = maps.filter(m => m.status === 'picked');
       
-      if (available.length === 1 && picked.length === 2 && !showSideDialog && !pendingMapForSide) {
+      if (available.length === 1 && picked.length === 2) {
         setIsProcessingLastMap(true);
-        const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
-        const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
         const lastMap = available[0];
         
-        setPendingMapForSide(lastMap.name);
-        setCurrentTeam(sideChoosingTeam);
-        setShowSideDialog(true);
+        setIsTransitioning(true);
+        
+        setTimeout(() => {
+          setMaps(prev => prev.map(m => 
+            m.name === lastMap.name 
+              ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } 
+              : m
+          ));
+        }, 800);
       }
     }
-  }, [gameMode, isFinished, isProcessingLastMap, showSideDialog, pendingMapForSide, maps, steps]);
+  }, [gameMode, isFinished, isProcessingLastMap, maps]);
 
   if (phase === 'setup') {
     return (
@@ -176,7 +181,7 @@ const Index = () => {
     return <FinalScreenBo1 maps={maps} />;
   }
 
-  const shouldShowFinalScreen = isFinished && gameMode === 'bo3' && pickedMaps.length === 3 && pickedMaps.every(map => map.side !== undefined) && !isProcessingLastMap;
+  const shouldShowFinalScreen = isFinished && gameMode === 'bo3' && pickedMaps.length === 3 && !isProcessingLastMap;
 
   if (shouldShowFinalScreen) {
     return (
@@ -189,7 +194,7 @@ const Index = () => {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-background overflow-hidden">
+    <div className={`h-screen w-screen flex flex-col bg-background overflow-hidden ${isTransitioning ? 'animate-fade-out' : ''}`}>
       <div className="flex items-center justify-between px-8 py-4 border-b border-border">
         <div className={`text-2xl font-bold ${currentTeam === 'A' && !isFinished ? 'text-teamA animate-pulse-glow' : 'text-foreground'}`}>
           {teamAName}
