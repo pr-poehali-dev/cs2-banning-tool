@@ -93,11 +93,33 @@ const Index = () => {
       setMaps(prev => prev.map(m => 
         m.name === mapName ? { ...m, status: 'picked', pickedBy: currentTeam, pickOrder } : m
       ));
-      moveToNextStep();
+      
+      if (gameMode === 'bo3') {
+        setPendingMapForSide(mapName);
+        setShowSideDialog(true);
+      } else {
+        moveToNextStep();
+      }
     }
   };
 
 
+
+  const handleSideChoice = (side: Side) => {
+    if (!pendingMapForSide) return;
+    
+    const oppositeTeam = currentTeam === 'A' ? 'B' : 'A';
+    
+    setMaps(prev => prev.map(m => 
+      m.name === pendingMapForSide 
+        ? { ...m, side: { team: oppositeTeam, side } } 
+        : m
+    ));
+    
+    setShowSideDialog(false);
+    setPendingMapForSide(null);
+    moveToNextStep();
+  };
 
   const moveToNextStep = () => {
     if (stepIndex < steps.length - 1) {
@@ -116,6 +138,12 @@ const Index = () => {
             const available = prev.filter(m => m.status === 'available');
             const picked = prev.filter(m => m.status === 'picked').length;
             if (available.length === 1 && picked === 2) {
+              const lastBanTeam = steps[steps.length - 1].team as 'A' | 'B';
+              const sideChoosingTeam = lastBanTeam === 'A' ? 'B' : 'A';
+              const lastMap = available[0];
+              setPendingMapForSide(lastMap.name);
+              setCurrentTeam(sideChoosingTeam);
+              setShowSideDialog(true);
               return prev.map(m => 
                 m.status === 'available' ? { ...m, status: 'picked', pickedBy: 'A', pickOrder: 3 } : m
               );
@@ -341,6 +369,11 @@ const Index = () => {
                     <span className="font-medium">
                       Карта {idx + 1}: <span className="uppercase">{map.name}</span>
                     </span>
+                    {map.side && (
+                      <span className="text-sm text-muted-foreground">
+                        {map.side.team === 'A' ? teamAName : teamBName} - {map.side.side}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -349,6 +382,34 @@ const Index = () => {
         </div>
       )}
 
+      <Dialog open={showSideDialog} onOpenChange={setShowSideDialog}>
+        <DialogContent className="sm:max-w-md">
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-2">Выбор стороны</h2>
+              <p className="text-muted-foreground">
+                {currentTeam === 'A' ? teamAName : teamBName}, выберите сторону для карты{' '}
+                <span className="uppercase font-bold">{pendingMapForSide}</span>
+              </p>
+            </div>
+            
+            <div className="flex gap-4">
+              <Button
+                onClick={() => handleSideChoice('T')}
+                className="flex-1 h-24 text-2xl font-bold bg-orange-600 hover:bg-orange-700"
+              >
+                T (Террористы)
+              </Button>
+              <Button
+                onClick={() => handleSideChoice('CT')}
+                className="flex-1 h-24 text-2xl font-bold bg-blue-600 hover:bg-blue-700"
+              >
+                CT (Спецназ)
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
     </div>
   );
