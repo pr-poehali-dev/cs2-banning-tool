@@ -320,7 +320,7 @@ const Index = () => {
               <div className="absolute inset-0 bg-black/40" />
               
               <div className="h-full flex flex-col items-center justify-between p-8 relative z-10">
-                {!isThirdMap ? (
+                {!isThirdMap && (
                   <div className="text-center">
                     <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
                       {teamAName}
@@ -329,9 +329,9 @@ const Index = () => {
                       {teamASide}
                     </div>
                   </div>
-                ) : (
-                  <div></div>
                 )}
+                
+                {isThirdMap && <div className="flex-1"></div>}
                 
                 <div className="text-center">
                   <div className="text-xs font-semibold text-white/70 uppercase tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-2">
@@ -341,6 +341,8 @@ const Index = () => {
                     {map.name}
                   </div>
                 </div>
+                
+                {isThirdMap && <div className="flex-1"></div>}
                 
                 <div className="text-center">
                   {isThirdMap ? (
